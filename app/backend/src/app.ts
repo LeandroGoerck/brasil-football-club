@@ -9,7 +9,7 @@ class App {
     this.config();
     // ...
   }
-
+// first change
   private config():void {
     const accessControl: express.RequestHandler = (_req, res, next) => {
       res.header('Access-Control-Allow-Origin', '*');
