@@ -1,4 +1,5 @@
 import * as express from 'express';
+import userRoutes from './routes/userRoutes';
 
 class App {
   public app: express.Express;
@@ -11,7 +12,6 @@ class App {
     // ...
   }
 
-  // first change
   private config():void {
     const accessControl: express.RequestHandler = (_req, res, next) => {
       res.header('Access-Control-Allow-Origin', '*');
@@ -21,12 +21,15 @@ class App {
     };
 
     this.app.use(accessControl);
+    this.app.use(express.json());
+    this.app.use('/user', userRoutes);
     // ...
   }
 
   // ...
   public start(PORT: string | number):void {
     this.app.listen(PORT);
+    console.log(`Back-End TFC server running in port ${PORT}`);
   }
 }
 
