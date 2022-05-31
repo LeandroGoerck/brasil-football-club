@@ -1,5 +1,6 @@
 import * as express from 'express';
-import userRoutes from './routes/userRoutes';
+import * as cors from 'cors';
+import loginRoutes from './routes/loginRoutes';
 
 class App {
   public app: express.Express;
@@ -20,9 +21,10 @@ class App {
       next();
     };
 
+    this.app.use(cors());
     this.app.use(accessControl);
     this.app.use(express.json());
-    this.app.use('/user', userRoutes);
+    this.app.use('/login', loginRoutes);
     // ...
   }
 
