@@ -31,7 +31,7 @@ const { expect } = chai;
 //   //   (Example.findOne as sinon.SinonStub).restore();
 //   // })
 
-//   // it('...', async () => {
+//   // it('should recieve JWT token when authenticaten with valid credentials', async () => {
 //   //   chaiHttpResponse = await chai
 //   //      .request(app)
 //   //      ...
@@ -40,6 +40,6 @@ const { expect } = chai;
 //   // });
 
 //   it('Seu sub-teste', () => {
-//     expect(true).to.be.eq(true);
+//     expect(false).to.be.eq(true);
 //   });
 // });
