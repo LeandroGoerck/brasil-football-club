@@ -14,4 +14,16 @@ export default class LoginController {
       next(error);
     }
   };
+
+  public validate = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { authorization } = req.headers;
+      if (!authorization) res.status(401).json({ message: 'empty authorization' });
+
+      const { status, role } = await this.service.validate(authorization as string);
+      return res.status(status).json(role);
+    } catch (error) {
+      next(error);
+    }
+  };
 }

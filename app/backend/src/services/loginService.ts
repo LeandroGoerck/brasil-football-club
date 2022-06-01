@@ -13,17 +13,21 @@ export default class LoginService {
     if (!password) return { status: 400, error: { message: MESSAGES.allFieldsMustBeFilled } };
 
     const userData = await UserModel.findOne({ where: { email } });
-    if (userData === null) {
-      return { status: 401, error: { message: MESSAGES.incorrectEmailOrPassword } };
-    }
+    if (!userData) return { status: 401, error: { message: MESSAGES.incorrectEmailOrPassword } };
 
     const bcryptVerify = await bcryptjs.compare(password, userData.password);
     console.log('bcryptVerify= ', bcryptVerify);
     if (!bcryptVerify) {
-      return { status: 400, error: { message: 'MESSAGES.incorrectEmailOrPassword' } };
+      return { status: 401, error: { message: MESSAGES.incorrectEmailOrPassword } };
     }
     const { token } = auth.generateToken(email, password);
     const userDataAndToken = ValidationsService.buildUserDataAndTokenObject(userData, token);
     return { status: 200, userDataAndToken };
+  };
+
+  public validate = async (authorization: string) => {
+    const role = await auth.checkToken(authorization);
+    if (!role) return { status: 400, error: { message: 'Jwt Check Error' } };
+    return { status: 200, role };
   };
 }

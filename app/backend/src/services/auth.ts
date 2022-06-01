@@ -1,26 +1,25 @@
 import * as jwt from 'jsonwebtoken';
 import 'dotenv/config';
+import UserModel from '../database/models/UsersModel';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'super_senha';
 
-const generateToken = (username: string, password: string): { token : string } => {
-  const jwtConfig = {
-    expiresIn: '1d',
-  };
-  const tokenNum = jwt.sign({ username, password }, JWT_SECRET, jwtConfig);
-  return ({ token: tokenNum });
+const generateToken = (email: string, password: string): { token : string } => {
+  const jwtConfig = { expiresIn: '1d' };
+  const token = jwt.sign({ email, password }, JWT_SECRET, jwtConfig);
+  return ({ token });
 };
 
-const checkJwt = async (authorization: string) => {
+const checkToken = async (authorization: string) => {
   const verifyToken = jwt.verify(authorization, JWT_SECRET) as jwt.JwtPayload;
-  console.log('verifyToken= ', verifyToken);
-  // const userEmailFound = await UserModel.findOne({ where: { email: verifyToken.email } });
-  // const userId = userEmailFound.dataValues.id;
-  if (verifyToken) return verifyToken;
+  const userEmailFound = await UserModel.findOne({ where: { email: verifyToken.email } });
+  if (!userEmailFound) return false;
+  const { role } = userEmailFound;
+  if (role) return role;
   return false;
 };
 
 export default {
   generateToken,
-  checkJwt,
+  checkToken,
 };
