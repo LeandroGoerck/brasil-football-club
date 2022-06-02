@@ -2,13 +2,13 @@ import { Request, Response, NextFunction } from 'express';
 import * as Joi from 'joi';
 import checkStatus from './checkStatus';
 
-
-
+const loginSchema = Joi.object({
+  email: Joi.string().min(3).required(),
+  password: Joi.string().min(3).required(),
+});
 
 const validateLoginMiddleware = (req: Request, res: Response, next: NextFunction) => {
-  
-  const { email, password } = req.body;
-
+  const { error } = loginSchema.validate(req.body);
   console.log('error=', error);
   const errorType = error?.details[0].type;
   if (checkStatus.code400(errorType)) return res.status(400).json({ message: error?.message });

@@ -10,7 +10,7 @@ const generateToken = (email: string, password: string): { token : string } => {
   return ({ token });
 };
 
-const checkToken = async (authorization: string) => {
+const checkToken = async (authorization: string) : Promise<string | false> => {
   const verifyToken = jwt.verify(authorization, JWT_SECRET) as jwt.JwtPayload;
   const userEmailFound = await UserModel.findOne({ where: { email: verifyToken.email } });
   if (!userEmailFound) return false;

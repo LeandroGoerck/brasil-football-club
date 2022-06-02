@@ -16,7 +16,6 @@ export default class LoginService {
     if (!userData) return { status: 401, error: { message: MESSAGES.incorrectEmailOrPassword } };
 
     const bcryptVerify = await bcryptjs.compare(password, userData.password);
-    console.log('bcryptVerify= ', bcryptVerify);
     if (!bcryptVerify) {
       return { status: 401, error: { message: MESSAGES.incorrectEmailOrPassword } };
     }
