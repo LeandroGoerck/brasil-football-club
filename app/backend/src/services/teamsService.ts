@@ -6,4 +6,10 @@ export default class TeamsService {
 
     return { status: 200, teamsData };
   };
+
+  public findById = async (id: any | undefined) => {
+    const teamData = await TeamsModel.findByPk(id);
+
+    return { status: 200, teamData };
+  };
 }
