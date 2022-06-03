@@ -7,9 +7,6 @@ import chaiHttp = require('chai-http');
 import { app } from '../app';
 import UsersModel from '../database/models/UsersModel';
 
-import { Response } from 'superagent';
-import auth from '../services/auth';
-
 const UsersMock = {
   id: 1,
   username: 'Admin',
@@ -23,7 +20,7 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
-describe('/login', () => {
+describe('PUT /login', () => {
 
   describe('Testing / endpoint', () => {
     describe('In case of success', () => {
@@ -47,7 +44,7 @@ describe('/login', () => {
 
     describe('In case of fail', () => {
       before(async () => {
-        sinon.stub(UsersModel, "findOne").resolves(UsersMock as UsersModel);
+        sinon.stub(UsersModel, "findOne").resolves(null);
       });
     
       after(()=>{
@@ -55,8 +52,9 @@ describe('/login', () => {
       });
 
       it('Deny login when email and password are wrong', async () => {
-        const response = await chai.request(app).post('/login')
-        .send({ email: 'wrong@email.com', password: 'wrong_secret' });
+        const response = await chai.request(app)
+        .post('/login')
+        .send({ email: 'wrong@email.com', password: 'wrong_secret123' });
         expect(response.body).to.be.deep.equal({ message: "Incorrect email or password" });
         expect(response.status).to.be.deep.equal(401);
       });
@@ -85,28 +83,27 @@ describe('/login', () => {
 });
 });
 
-describe('/login/validate', () => {
-  describe('in case of succes', () => {
-    before(async () => {
-      sinon.stub(UsersModel, "findOne").resolves(UsersMock as UsersModel);
-      sinon.stub(auth, "checkToken").resolves('admin');
-    });
+// describe('/login/validate', () => {
+//   describe('in case of succes', () => {
+//     before(async () => {
+//       sinon.stub(UsersModel, "findOne").resolves(UsersMock as UsersModel);
+//       sinon.stub(auth, "checkToken").resolves('admin');
+//     });
   
-    after(()=>{
-      (UsersModel.findOne as sinon.SinonStub).restore();
-      (auth.checkToken as sinon.SinonStub).restore();
-    });
+//     after(()=>{
+//       (UsersModel.findOne as sinon.SinonStub).restore();
+//       (auth.checkToken as sinon.SinonStub).restore();
+//     });
 
-    it('returns admin if the user role is admin', async () => {
-      const response = await chai.request(app).post('/login/validate')
-        .set('authorization', 'superTokenString').send();
-        console.log(response.body);
-      expect(response.body).to.be.deep.equal("admin");
-      expect(response.status).to.be.deep.equal(200);
-    });
+//     it('returns admin if the user role is admin', async () => {
+//       const response = await chai.request(app).post('/login/validate')
+//         .set('authorization', 'superTokenString').send();
+//       expect(response.body).to.be.deep.equal("admin");
+//       expect(response.status).to.be.deep.equal(200);
+//     });
 
-  })
-  // describe('in case of fail', () => {
+//   })
+//   // describe('in case of fail', () => {
 
-  // })
-});
+//   // })
+// });

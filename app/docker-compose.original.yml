@@ -2,8 +2,9 @@ version: '3.9'
 services:
   frontend:
     build: ./frontend
-    platform: linux/x86_64 
-    # ...
+    container_name: app_frontend
+    ports: #rede local : rede interna dos containeres
+      - 3000:3000
     depends_on:
       backend:
         condition: service_healthy
@@ -15,9 +16,9 @@ services:
       retries: 5
   backend:
     build: ./backend
-    platform: linux/x86_64
-    restart: 'always'
-    # ...
+    container_name: app_backend
+    ports: #rede local : rede interna dos containeres
+      - 3001:3001
     depends_on:
       db:
         condition: service_healthy
@@ -36,9 +37,8 @@ services:
       retries: 5
   db:
     image: mysql:8.0.21
-    platform: linux/x86_64 
     container_name: db
-    ports:
+    ports: #rede local : rede interna dos containeres
       - 3002:3306
     environment:
       - MYSQL_ROOT_PASSWORD=123456

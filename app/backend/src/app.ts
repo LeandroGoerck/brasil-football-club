@@ -1,16 +1,15 @@
 import * as express from 'express';
+
 import * as cors from 'cors';
 import loginRoutes from './routes/loginRoutes';
+import handleErrors from './middlewares/errorMiddleware';
 
 class App {
   public app: express.Express;
-  // ...
 
   constructor() {
-    // ...
     this.app = express();
     this.config();
-    // ...
   }
 
   private config():void {
@@ -25,10 +24,11 @@ class App {
     this.app.use(accessControl);
     this.app.use(express.json());
     this.app.use('/login', loginRoutes);
-    // ...
+
+    this.app.use(handleErrors);
+    console.log('end\n');
   }
 
-  // ...
   public start(PORT: string | number):void {
     this.app.listen(PORT);
     console.log(`Back-End TFC server running in port ${PORT}`);
