@@ -6,6 +6,7 @@ const matchesController = new MatchesController();
 
 const router = express.Router();
 
+router.patch('/:id', validateToken, matchesController.updateCurrentMatch);
 router.patch('/:id/finish', validateToken, matchesController.update);
 router.post('/', validateToken, matchesController.create);
 router.get('/', matchesController.getMatches);

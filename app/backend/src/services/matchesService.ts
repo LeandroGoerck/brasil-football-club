@@ -2,6 +2,7 @@ import TeamsModel from '../database/models/TeamsModel';
 import MatchesModel from '../database/models/MatchesModel';
 import IMatch from '../interfaces/IMatch';
 import ERR from './errors';
+import IUpdateMatch from '../interfaces/IUpdateMatch';
 
 export default class MatchesService {
   public getAll = async () => {
@@ -42,5 +43,10 @@ export default class MatchesService {
 
   public update = async (id: string) => {
     await MatchesModel.update({ inProgress: false }, { where: { id } });
+  };
+
+  public updateCurrentMatch = async (id: string, matchData: IUpdateMatch) => {
+    await MatchesModel.update(matchData, { where: { id } });
+    console.log(id, matchData);
   };
 }
