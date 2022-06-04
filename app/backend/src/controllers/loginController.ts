@@ -8,7 +8,7 @@ export default class LoginController {
   public login = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { email, password } = req.body;
-      const { userDataAndToken } = await this.service.login({ email, password });
+      const userDataAndToken = await this.service.login({ email, password });
       return res.status(200).json(userDataAndToken);
     } catch (error) {
       next(error);

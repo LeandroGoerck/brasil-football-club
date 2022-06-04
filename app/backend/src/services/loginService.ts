@@ -1,7 +1,6 @@
 import * as bcryptjs from 'bcryptjs';
 import ILogin from '../interfaces/loginInterface';
 import UserModel from '../database/models/UsersModel';
-import ValidationsService from './validationService';
 import auth from './auth';
 import ERR from './errors';
 
@@ -16,8 +15,15 @@ export default class LoginService {
     if (!bcryptVerify) throw ERR.allFieldsMustBeFilled;
 
     const { token } = auth.generateToken(email, password);
-    const userDataAndToken = ValidationsService.buildUserDataAndTokenObject(userData, token);
-    return { userDataAndToken };
+    return {
+      user: {
+        id: userData.id,
+        username: userData.username,
+        role: userData.role,
+        email: userData.email,
+      },
+      token,
+    };
   };
 
   public validate = async (authorization: string) => {
