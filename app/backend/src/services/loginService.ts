@@ -1,5 +1,5 @@
 import * as bcryptjs from 'bcryptjs';
-import ILogin from '../interfaces/loginInterface';
+import ILogin from '../interfaces/ILogin';
 import UserModel from '../database/models/UsersModel';
 import auth from './auth';
 import ERR from './errors';

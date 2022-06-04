@@ -1,11 +1,12 @@
-import Teams from '../database/models/TeamsModel';
+import TeamsModel from '../database/models/TeamsModel';
 import MatchesModel from '../database/models/MatchesModel';
 import IMatch from '../interfaces/IMatch';
+import ERR from './errors';
 
 export default class MatchesService {
   public getAll = async () => {
-    const teamHomeOption = { model: Teams, as: 'teamHome', attributes: ['teamName'] };
-    const teamAwayOption = { model: Teams, as: 'teamAway', attributes: ['teamName'] };
+    const teamHomeOption = { model: TeamsModel, as: 'teamHome', attributes: ['teamName'] };
+    const teamAwayOption = { model: TeamsModel, as: 'teamAway', attributes: ['teamName'] };
 
     const matchesData = await MatchesModel
       .findAll({ include: [teamHomeOption, teamAwayOption] });
@@ -14,8 +15,8 @@ export default class MatchesService {
   };
 
   public getByProgress = async (progressOption: string) => {
-    const teamHomeOption = { model: Teams, as: 'teamHome', attributes: ['teamName'] };
-    const teamAwayOption = { model: Teams, as: 'teamAway', attributes: ['teamName'] };
+    const teamHomeOption = { model: TeamsModel, as: 'teamHome', attributes: ['teamName'] };
+    const teamAwayOption = { model: TeamsModel, as: 'teamAway', attributes: ['teamName'] };
     const inProgress = progressOption === 'true' ? 1 : 0;
 
     const matchesData = await MatchesModel
@@ -24,9 +25,18 @@ export default class MatchesService {
     return { matchesData };
   };
 
+  public validateNewMatch = async (match: IMatch) => {
+    if (match.awayTeam === match.homeTeam) throw ERR.twoEqualTeams;
+    const teamsData = await TeamsModel.findAll();
+    const teamsIdList = await teamsData.map((teams) => teams.id);
+    const awayIdFound = teamsIdList.find((id: number) => id === match.awayTeam);
+    const homeIdFound = teamsIdList.find((id: number) => id === match.homeTeam);
+    if (!awayIdFound || !homeIdFound) throw ERR.thisIdDoesNotExist;
+  };
+
   public create = async (match: IMatch) => {
-    const createdMatch = await MatchesModel
-      .create(match);
+    await this.validateNewMatch(match);
+    const createdMatch = await MatchesModel.create(match);
     return createdMatch;
   };
 
