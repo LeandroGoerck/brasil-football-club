@@ -6,8 +6,8 @@ export default class TeamsController {
 
   public getAll = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { status, teamsData } = await this.service.getAll();
-      return res.status(status).json(teamsData);
+      const { teamsData } = await this.service.getAll();
+      return res.status(200).json(teamsData);
     } catch (error) {
       next(error);
     }
@@ -17,8 +17,8 @@ export default class TeamsController {
     try {
       const { id } = req.params;
       if (!id) return res.status(200).json({});
-      const { status, teamData } = await this.service.findById(id);
-      return res.status(status).json(teamData);
+      const { teamData } = await this.service.findById(id);
+      return res.status(200).json(teamData);
     } catch (error) {
       next(error);
     }

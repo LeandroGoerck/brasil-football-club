@@ -9,7 +9,7 @@ export default class MatchesService {
     const matchesData = await MatchesModel
       .findAll({ include: [teamHomeOption, teamAwayOption] });
 
-    return { status: 200, matchesData };
+    return { matchesData };
   };
 
   public getByProgress = async (progressOption: string) => {
@@ -20,6 +20,6 @@ export default class MatchesService {
     const matchesData = await MatchesModel
       .findAll({ where: { inProgress }, include: [teamHomeOption, teamAwayOption] });
 
-    return { status: 200, matchesData };
+    return { matchesData };
   };
 }
