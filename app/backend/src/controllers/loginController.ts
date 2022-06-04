@@ -8,8 +8,8 @@ export default class LoginController {
   public login = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { email, password } = req.body;
-      const { status, userDataAndToken } = await this.service.login({ email, password });
-      return res.status(status).json(userDataAndToken);
+      const { userDataAndToken } = await this.service.login({ email, password });
+      return res.status(200).json(userDataAndToken);
     } catch (error) {
       next(error);
     }
@@ -20,8 +20,8 @@ export default class LoginController {
       const { authorization } = req.headers;
       if (!authorization || authorization === 'null') throw ERR.emptyAuthorization;
 
-      const { status, role } = await this.service.validate(authorization as string);
-      return res.status(status).json(role);
+      const { role } = await this.service.validate(authorization as string);
+      return res.status(200).json(role);
     } catch (error) {
       next(error);
     }

@@ -9,8 +9,6 @@ export default class LoginService {
   public login = async (data: ILogin) => {
     const { email, password } = data;
 
-    if (!email || !password) throw ERR.allFieldsMustBeFilled;
-
     const userData = await UserModel.findOne({ where: { email } });
     if (!userData) throw ERR.incorrectEmailOrPassword;
 
@@ -19,12 +17,12 @@ export default class LoginService {
 
     const { token } = auth.generateToken(email, password);
     const userDataAndToken = ValidationsService.buildUserDataAndTokenObject(userData, token);
-    return { status: 200, userDataAndToken };
+    return { userDataAndToken };
   };
 
   public validate = async (authorization: string) => {
     const role = await auth.checkToken(authorization);
     if (!role) throw ERR.jwtCheckError;
-    return { status: 200, role };
+    return { role };
   };
 }
