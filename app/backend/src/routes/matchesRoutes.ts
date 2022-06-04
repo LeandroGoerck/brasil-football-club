@@ -5,6 +5,6 @@ const matchesController = new MatchesController();
 
 const router = express.Router();
 
-router.get('/', matchesController.getAll);
+router.get('/', matchesController.getMatches);
 
 export default router;
