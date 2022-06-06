@@ -47,6 +47,5 @@ export default class MatchesService {
 
   public updateCurrentMatch = async (id: string, matchData: IUpdateMatch) => {
     await MatchesModel.update(matchData, { where: { id } });
-    console.log(id, matchData);
   };
 }

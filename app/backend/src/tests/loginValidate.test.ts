@@ -1,3 +1,4 @@
+import * as bcryptjs from 'bcryptjs';
 import * as sinon from 'sinon';
 import * as chai from 'chai';
 import { before, after } from 'mocha'
@@ -6,6 +7,7 @@ import chaiHttp = require('chai-http');
 
 import { app } from '../app';
 import UsersModel from '../database/models/UsersModel';
+import auth from '../services/auth';
 
 const UsersMock = {
   id: 1,
@@ -25,14 +27,16 @@ const { expect } = chai;
 describe('GET /login/validate', () => {
   describe('in case of succes', () => {
     before(async () => {
-      sinon.stub(UsersModel, "findOne").resolves(UsersMock as UsersModel);
+      sinon.stub(UsersModel, 'findOne').resolves(UsersMock as UsersModel);
+      sinon.stub(auth, 'checkToken').resolves('admin');
     });
   
     after(()=>{
       (UsersModel.findOne as sinon.SinonStub).restore();
+      (auth.checkToken as sinon.SinonStub).restore();
     });
 
-    it('Valid token', async () => {
+    it('returns the role :admin: when an valid admin token is sent', async () => {
       const response = await chai.request(app).get('/login/validate').set('authorization', TOKEN);
       expect(response.body).to.be.equal('admin');
     });
@@ -48,7 +52,7 @@ describe('GET /login/validate', () => {
       (UsersModel.findOne as sinon.SinonStub).restore();
     });
 
-    it('Invalid token', async () => {
+    it('sends :Internal server Error message: when token is invalid', async () => {
       const response = await chai.request(app).get('/login/validate').set('authorization', INVALID_TOKEN);
       expect(response.body).to.deep.equal({ message: 'Internal server Error' });
     });

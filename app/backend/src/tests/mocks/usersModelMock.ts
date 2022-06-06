@@ -1,4 +1,4 @@
-export const UsersMock = {
+export const usersModelMock = {
   id: 1,
   username: 'Admin',
   role: 'admin',

@@ -1,18 +1,12 @@
 import { Model } from 'sequelize/types';
 
-interface IMatch extends Model{
+interface ICreatedMatch extends Model{
   id: number;
   homeTeam: number;
   awayTeam: number;
   homeTeamGoals: number;
   awayTeamGoals: number;
   inProgress: boolean;
-  teamHome: {
-    teamName: string;
-  },
-  teamAway: {
-    teamName: string;
-  }
 }
 
-export default IMatch;
+export default ICreatedMatch;

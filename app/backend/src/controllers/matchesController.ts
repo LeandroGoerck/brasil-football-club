@@ -22,7 +22,6 @@ export default class MatchesController {
   public create = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const match = req.body;
-      console.log(match);
       const createdMatch = await this.service.create(match);
       return res.status(201).json(createdMatch);
     } catch (error) {

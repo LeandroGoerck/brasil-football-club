@@ -17,7 +17,7 @@ export default class TeamsController {
     try {
       const { id } = req.params;
       if (!id) return res.status(200).json({});
-      const { teamData } = await this.service.findById(id);
+      const { teamData } = await this.service.findById(id as string);
       return res.status(200).json(teamData);
     } catch (error) {
       next(error);

@@ -7,7 +7,7 @@ export default class TeamsService {
     return { teamsData };
   };
 
-  public findById = async (id: any | undefined) => {
+  public findById = async (id: string) => {
     const teamData = await TeamsModel.findByPk(id);
 
     return { teamData };
