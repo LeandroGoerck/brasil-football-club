@@ -7,5 +7,6 @@ const router = express.Router();
 
 router.get('/', leaderboardController.getLeaderboard);
 router.get('/home', leaderboardController.getLeaderboardhome);
+router.get('/away', leaderboardController.getLeaderboardaway);
 
 export default router;

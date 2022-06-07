@@ -89,8 +89,8 @@ export default class LeaderboardService {
   public buildTeamData = (teamNumber: number, matchesData: Array<Matches>): ITeamBoard => {
     const totalVictories = this.getTotalVictories(teamNumber, matchesData);
     const totalDraws = this.getTotalDraws(teamNumber, matchesData);
-    const goalsFavor = this.getTeamGoalsFavor(12, matchesData);
-    const goalsOwn = this.getTeamGoalsOwn(12, matchesData);
+    const goalsFavor = this.getTeamGoalsFavor(teamNumber, matchesData);
+    const goalsOwn = this.getTeamGoalsOwn(teamNumber, matchesData);
     const totalPoints = (totalVictories * 3) + (totalDraws * 1);
     const totalGames = this.getTotalGames(teamNumber, matchesData);
 
@@ -108,16 +108,41 @@ export default class LeaderboardService {
     };
   };
 
+  public sortLeaderBoard = (unsortedLeaderboard: Array<ITeamBoard>) => {
+    const sortedLeaderboard = unsortedLeaderboard.sort((teamA, teamB) => {
+      if (teamA.totalPoints < teamB.totalPoints) return 1;
+      if (teamA.totalPoints > teamB.totalPoints) return -1;
+
+      if (teamA.totalVictories < teamB.totalVictories) return 1;
+      if (teamA.totalVictories > teamB.totalVictories) return -1;
+
+      if (teamA.goalsBalance < teamB.goalsBalance) return 1;
+      if (teamA.goalsBalance > teamB.goalsBalance) return -1;
+
+      if (teamA.goalsFavor < teamB.goalsFavor) return 1;
+      if (teamA.goalsFavor > teamB.goalsFavor) return -1;
+
+      if (teamA.goalsOwn < teamB.goalsOwn) return 1;
+      if (teamA.goalsOwn > teamB.goalsOwn) return -1;
+      return 0;
+    });
+    return sortedLeaderboard;
+  };
+
   public leaderboardService = async () => {
     const { matchesData } = await this.service.getAll();
 
-    const listOfTeamNumbes: Array<number> = [];
-    matchesData.map((match) => !listOfTeamNumbes
-      .includes(match.homeTeam) && listOfTeamNumbes.push(match.homeTeam)) as Array<number>;
+    const listOfTeamNumbers: Array<number> = [];
+    matchesData.map((match) => !listOfTeamNumbers
+      .includes(match.homeTeam) && listOfTeamNumbers.push(match.homeTeam)) as Array<number>;
+    matchesData.map((match) => !listOfTeamNumbers
+      .includes(match.awayTeam) && listOfTeamNumbers.push(match.awayTeam)) as Array<number>;
 
-    const leaderboard = listOfTeamNumbes.map((teamNumber) => (this
+    const leaderboard = listOfTeamNumbers.map((teamNumber) => (this
       .buildTeamData(teamNumber, matchesData) as ITeamBoard));
 
-    return leaderboard;
+    const sortedLeaderboard = this.sortLeaderBoard(leaderboard);
+
+    return sortedLeaderboard;
   };
 }

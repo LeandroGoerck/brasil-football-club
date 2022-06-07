@@ -3,38 +3,38 @@ import Matches from '../database/models/MatchesModel';
 import MatchesService from './matchesService';
 import ITeamBoard from '../interfaces/ITeamBoard';
 
-export default class LeaderboardhomeService {
+export default class LeaderboardawayService {
   public service = new MatchesService();
 
   public getTeamName = (teamNumber: number, matchesData: Array<Matches>) => {
-    const foundObj = matchesData.find((match) => teamNumber === match.homeTeam) as IMatch;
-    return foundObj.teamHome.teamName as string;
+    const foundObj = matchesData.find((match) => teamNumber === match.awayTeam) as IMatch;
+    return foundObj.teamAway.teamName as string;
   };
 
   public getTeamGoalsFavor = (teamNumber: number, matchesData: Array<Matches>) => {
-    const homeTeamGoalsList: Array<number> = [];
+    const awayTeamGoalsList: Array<number> = [];
     matchesData.forEach((match) => {
-      if (match.homeTeam === teamNumber) homeTeamGoalsList.push(match.homeTeamGoals);
+      if (match.awayTeam === teamNumber) awayTeamGoalsList.push(match.awayTeamGoals);
     });
-    const totalTeamGoalsFavor = homeTeamGoalsList
+    const totalTeamGoalsFavor = awayTeamGoalsList
       .reduce((prev, curr) => prev + curr);
     return totalTeamGoalsFavor;
   };
 
   public getTeamGoalsOwn = (teamNumber: number, matchesData: Array<Matches>) => {
-    const homeTeamGoalsList: Array<number> = [];
+    const awayTeamGoalsList: Array<number> = [];
     matchesData.forEach((match) => {
-      if (match.homeTeam === teamNumber) homeTeamGoalsList.push(match.awayTeamGoals);
+      if (match.awayTeam === teamNumber) awayTeamGoalsList.push(match.homeTeamGoals);
     });
-    const totalHomeTeamOwn = homeTeamGoalsList
+    const totalAwayTeamOwn = awayTeamGoalsList
       .reduce((prev, curr) => prev + curr);
-    return totalHomeTeamOwn;
+    return totalAwayTeamOwn;
   };
 
   public getTotalGames = (teamNumber: number, matchesData: Array<Matches>) => {
     let totalGames = 0;
     matchesData.forEach((match) => {
-      if (match.homeTeam === teamNumber) totalGames += 1;
+      if (match.awayTeam === teamNumber) totalGames += 1;
     });
     return totalGames;
   };
@@ -42,8 +42,8 @@ export default class LeaderboardhomeService {
   public getTotalVictories = (teamNumber: number, matchesData: Array<Matches>) => {
     let totalVictories = 0;
     matchesData.forEach((match) => {
-      if (match.homeTeam === teamNumber
-        && match.homeTeamGoals > match.awayTeamGoals) totalVictories += 1;
+      if (match.awayTeam === teamNumber
+        && match.awayTeamGoals > match.homeTeamGoals) totalVictories += 1;
     });
     return totalVictories;
   };
@@ -51,8 +51,8 @@ export default class LeaderboardhomeService {
   public getTotalDraws = (teamNumber: number, matchesData: Array<Matches>) => {
     let totalDraws = 0;
     matchesData.forEach((match) => {
-      if (match.homeTeam === teamNumber
-        && match.homeTeamGoals === match.awayTeamGoals) totalDraws += 1;
+      if (match.awayTeam === teamNumber
+        && match.awayTeamGoals === match.homeTeamGoals) totalDraws += 1;
     });
     return totalDraws;
   };
@@ -60,8 +60,8 @@ export default class LeaderboardhomeService {
   public getTotalLosses = (teamNumber: number, matchesData: Array<Matches>) => {
     let totalLosses = 0;
     matchesData.forEach((match) => {
-      if (match.homeTeam === teamNumber
-        && match.homeTeamGoals < match.awayTeamGoals) totalLosses += 1;
+      if (match.awayTeam === teamNumber
+        && match.awayTeamGoals < match.homeTeamGoals) totalLosses += 1;
     });
     return totalLosses;
   };
@@ -109,18 +109,18 @@ export default class LeaderboardhomeService {
     return sortedLeaderboard;
   };
 
-  public leaderboardhomeService = async () => {
+  public leaderboardawayService = async () => {
     const { matchesData } = await this.service.getByProgress('false');
     console.log(matchesData);
     const listOfTeamNumbers: Array<number> = [];
     matchesData.map((match) => !listOfTeamNumbers
-      .includes(match.homeTeam) && listOfTeamNumbers.push(match.homeTeam)) as Array<number>;
+      .includes(match.awayTeam) && listOfTeamNumbers.push(match.awayTeam)) as Array<number>;
 
-    const leaderboardhome = listOfTeamNumbers.map((teamNumber) => (this
+    const leaderboardaway = listOfTeamNumbers.map((teamNumber) => (this
       .buildTeamData(teamNumber, matchesData) as ITeamBoard));
 
-    const sortedLeaderBoardHome = this.sortLeaderBoard(leaderboardhome);
-    console.log(sortedLeaderBoardHome);
-    return sortedLeaderBoardHome;
+    const sortedLeaderBoardAway = this.sortLeaderBoard(leaderboardaway);
+    console.log(sortedLeaderBoardAway);
+    return sortedLeaderBoardAway;
   };
 }
