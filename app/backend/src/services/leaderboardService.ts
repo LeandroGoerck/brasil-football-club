@@ -130,7 +130,7 @@ export default class LeaderboardService {
   };
 
   public leaderboardService = async () => {
-    const { matchesData } = await this.service.getAll();
+    const { matchesData } = await this.service.getByProgress('false');
 
     const listOfTeamNumbers: Array<number> = [];
     matchesData.map((match) => !listOfTeamNumbers
