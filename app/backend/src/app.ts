@@ -32,7 +32,6 @@ class App {
     this.app.use('/leaderboard', leaderboardRoutes);
 
     this.app.use(handleErrors);
-    // console.log('end\n');
   }
 
   public start(PORT: string | number):void {

@@ -82,28 +82,3 @@ describe('PUT /login', () => {
     })
 });
 });
-
-// describe('/login/validate', () => {
-//   describe('in case of succes', () => {
-//     before(async () => {
-//       sinon.stub(UsersModel, "findOne").resolves(UsersMock as UsersModel);
-//       sinon.stub(auth, "checkToken").resolves('admin');
-//     });
-  
-//     after(()=>{
-//       (UsersModel.findOne as sinon.SinonStub).restore();
-//       (auth.checkToken as sinon.SinonStub).restore();
-//     });
-
-//     it('returns admin if the user role is admin', async () => {
-//       const response = await chai.request(app).post('/login/validate')
-//         .set('authorization', 'superTokenString').send();
-//       expect(response.body).to.be.deep.equal("admin");
-//       expect(response.status).to.be.deep.equal(200);
-//     });
-
-//   })
-//   // describe('in case of fail', () => {
-
-//   // })
-// });

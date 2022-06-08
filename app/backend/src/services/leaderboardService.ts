@@ -1,6 +1,5 @@
 import IMatch from '../interfaces/IMatch';
 import Matches from '../database/models/MatchesModel';
-// import ITeamBoard from '../interfaces/ITeamBoard';
 import MatchesService from './matchesService';
 import ITeamBoard from '../interfaces/ITeamBoard';
 
