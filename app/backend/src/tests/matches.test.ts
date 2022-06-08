@@ -181,7 +181,7 @@ describe('PATCH /matches', () => {
       });
     });
 
-  describe('Testing /46 endpoint', () => {
+  describe('Testing /:id endpoint', () => {
     describe('In case of success', () => {
       before(async () => {
         sinon.stub(MatchesModel, 'update').resolves(undefined);
@@ -205,5 +205,6 @@ describe('PATCH /matches', () => {
         });
       });
     });
+
   });
 

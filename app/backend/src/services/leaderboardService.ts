@@ -8,31 +8,35 @@ export default class LeaderboardService {
   public service = new MatchesService();
 
   public getTeamName = (teamNumber: number, matchesData: Array<Matches>) => {
-    const foundObj = matchesData.find((match) => teamNumber === match.homeTeam) as IMatch;
-    return foundObj.teamHome.teamName as string;
+    const homeTeamName = matchesData.find((match) => teamNumber === match.homeTeam) as IMatch;
+    const awayTeamName = matchesData.find((match) => teamNumber === match.awayTeam) as IMatch;
+    const homeName = homeTeamName?.teamHome?.teamName;
+    const awayName = awayTeamName?.teamAway?.teamName;
+    if (homeName) return homeName;
+    return awayName;
   };
 
   public getTeamGoalsFavor = (teamNumber: number, matchesData: Array<Matches>) => {
-    const homeTeamGoalsList: Array<number> = [];
+    const teamGoalsList: Array<number> = [];
     matchesData.forEach((match) => {
-      if (match.homeTeam === teamNumber) homeTeamGoalsList.push(match.homeTeamGoals);
+      if (match.homeTeam === teamNumber) teamGoalsList.push(match.homeTeamGoals);
     });
     matchesData.forEach((match) => {
-      if (match.awayTeam === teamNumber) homeTeamGoalsList.push(match.awayTeamGoals);
+      if (match.awayTeam === teamNumber) teamGoalsList.push(match.awayTeamGoals);
     });
-    const totalTeamGoalsFavor = homeTeamGoalsList.reduce((prev, curr) => prev + curr);
+    const totalTeamGoalsFavor = teamGoalsList.reduce((prev, curr) => prev + curr);
     return totalTeamGoalsFavor;
   };
 
   public getTeamGoalsOwn = (teamNumber: number, matchesData: Array<Matches>) => {
-    const homeTeamGoalsList: Array<number> = [];
+    const teamGoalsList: Array<number> = [];
     matchesData.forEach((match) => {
-      if (match.homeTeam === teamNumber) homeTeamGoalsList.push(match.awayTeamGoals);
+      if (match.homeTeam === teamNumber) teamGoalsList.push(match.awayTeamGoals);
     });
     matchesData.forEach((match) => {
-      if (match.awayTeam === teamNumber) homeTeamGoalsList.push(match.homeTeamGoals);
+      if (match.awayTeam === teamNumber) teamGoalsList.push(match.homeTeamGoals);
     });
-    const totalHomeTeamOwn = homeTeamGoalsList.reduce((prev, curr) => prev + curr);
+    const totalHomeTeamOwn = teamGoalsList.reduce((prev, curr) => prev + curr);
     return totalHomeTeamOwn;
   };
 
@@ -131,13 +135,11 @@ export default class LeaderboardService {
 
   public leaderboardService = async () => {
     const { matchesData } = await this.service.getByProgress('false');
-
     const listOfTeamNumbers: Array<number> = [];
     matchesData.map((match) => !listOfTeamNumbers
       .includes(match.homeTeam) && listOfTeamNumbers.push(match.homeTeam)) as Array<number>;
     matchesData.map((match) => !listOfTeamNumbers
       .includes(match.awayTeam) && listOfTeamNumbers.push(match.awayTeam)) as Array<number>;
-
     const leaderboard = listOfTeamNumbers.map((teamNumber) => (this
       .buildTeamData(teamNumber, matchesData) as ITeamBoard));
 

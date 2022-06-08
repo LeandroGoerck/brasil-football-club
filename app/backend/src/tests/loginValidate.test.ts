@@ -47,7 +47,7 @@ describe('GET /login/validate', () => {
     before(async () => {
       sinon.stub(UsersModel, "findOne").resolves(null);
     });
-  
+
     after(()=>{
       (UsersModel.findOne as sinon.SinonStub).restore();
     });
