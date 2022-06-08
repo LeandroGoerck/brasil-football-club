@@ -7,8 +7,12 @@ export default class LeaderboardhomeService {
   public service = new MatchesService();
 
   public getTeamName = (teamNumber: number, matchesData: Array<Matches>) => {
-    const foundObj = matchesData.find((match) => teamNumber === match.homeTeam) as IMatch;
-    return foundObj.teamHome.teamName as string;
+    const homeTeamName = matchesData.find((match) => teamNumber === match.homeTeam) as IMatch;
+    const awayTeamName = matchesData.find((match) => teamNumber === match.awayTeam) as IMatch;
+    const homeName = homeTeamName?.teamHome?.teamName;
+    const awayName = awayTeamName?.teamAway?.teamName;
+    if (homeName) return homeName;
+    return awayName;
   };
 
   public getTeamGoalsFavor = (teamNumber: number, matchesData: Array<Matches>) => {
@@ -111,7 +115,6 @@ export default class LeaderboardhomeService {
 
   public leaderboardhomeService = async () => {
     const { matchesData } = await this.service.getByProgress('false');
-    console.log(matchesData);
     const listOfTeamNumbers: Array<number> = [];
     matchesData.map((match) => !listOfTeamNumbers
       .includes(match.homeTeam) && listOfTeamNumbers.push(match.homeTeam)) as Array<number>;
@@ -120,7 +123,6 @@ export default class LeaderboardhomeService {
       .buildTeamData(teamNumber, matchesData) as ITeamBoard));
 
     const sortedLeaderBoardHome = this.sortLeaderBoard(leaderboardhome);
-    console.log(sortedLeaderBoardHome);
     return sortedLeaderBoardHome;
   };
 }
