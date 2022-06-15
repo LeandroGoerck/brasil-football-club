@@ -52,13 +52,12 @@ Run the tests:
 ```
 npm run test
 ```
-🚀 Skills
-Handle front-end, back-end and database Docker containers, including it's network, volume and compose; 🐋
-Model database data with MySQL using Sequelize; 🎲
-Create and associate tables using sequelize models; 📑
-Build an REST API (using express with Typescript) with endpoints to consume the created models; 🔄
-Make a CRUD with Typescript, using ORM; 🗃️
-
+## 🚀 Skills
+- Handle front-end, back-end and database Docker containers, including it's network, volume and compose; 🐋 
+- Model database data with MySQL using Sequelize; 🎲 
+- Create and associate tables using sequelize models; 📑 
+- Build an REST API (using express with Typescript) with endpoints to consume the created models; 🔄 
+- Make a CRUD with Typescript, using ORM; 🗃️ 
 ## Autors
 -Back-end >> @LeandroGoerck
 
