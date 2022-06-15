@@ -1,1 +1,0 @@
-npm run test __tests__/E2E/01
