@@ -20,7 +20,7 @@ The front-end was developed by Trybe and the files are in the 'app/frontend' fol
 The back-end was developed by me, and are in the 'app/backend' folder.
 
 
-## computer Install the project
+## 💻 Install the project
 Clone the repo:
 ```
 git clone git@github.com:LeandroGoerck/trybe-football-club.git
