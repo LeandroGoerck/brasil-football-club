@@ -1,8 +1,9 @@
 import * as jwt from 'jsonwebtoken';
 import 'dotenv/config';
+import * as fs from 'fs';
 import UserModel from '../database/models/UsersModel';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'super_senha';
+const JWT_SECRET = fs.readFileSync('jwt.evaluation.key', { encoding: 'utf8' });
 
 const generateToken = (email: string, password: string): { token : string } => {
   const jwtConfig = { expiresIn: '1d' };
