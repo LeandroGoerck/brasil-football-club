@@ -1,7 +1,7 @@
 
-# Trybe Football Club :
+# ⚽ Trybe Football Club ⚽
 
-🇧🇷
+ 🇧🇷
 O Trybe Football Club é um site para gerenciar partidas de futebol. Nele é possivel adicionar uma partida, registrar os gols do time da casa e do time visitante, acompanhar a pontuação dos jogos em andamento e visualizar a classificação geral.
 
 Como estudante, o desafio foi desenvolver a API back-end aplicando TDD (Test Driven Development) de acordo com os requisitos necessarios para que o site passe a funcionar.
@@ -9,8 +9,9 @@ Como estudante, o desafio foi desenvolver a API back-end aplicando TDD (Test Dri
 O front-end foi desenvolvido pela Trybe e os arquivos estão na pasta 'app/frontend'.
 
 O back-end foi desenvolvido por mim e os arquivos estão na pasta 'app/backend'.
+___
 
-🇺🇸
+ 🇺🇸
 Trybe Football Club is a website to manage football matches. It's possible to add a match, record the goals of the home team and the away team, follow the score of the games in progress and view the general classification.
 
 As a student, the challenge was to develop the back-end API applying TDD (Test Driven Development) according to the requirements for the site to start working.
@@ -59,6 +60,5 @@ npm run test
 - Build an REST API (using express with Typescript) with endpoints to consume the created models; 🔄 
 - Make a CRUD with Typescript, using ORM; 🗃️ 
 ## Autors
--Back-end >> @LeandroGoerck
-
--Front-end >> @Trybe
+- Back-end >> [@LeandroGoerck](https://www.github.com/LeandroGoerck)
+- Front-end >> [@Trybe](https://www.github.com/LeandroGoerck)
