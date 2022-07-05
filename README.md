@@ -59,6 +59,6 @@ npm run test
 - Create and associate tables using sequelize models; 📑 
 - Build an REST API (using express with Typescript) with endpoints to consume the created models; 🔄 
 - Make a CRUD with Typescript, using ORM; 🗃️ 
-## Autors
+## Authors
 - Back-end >> [@LeandroGoerck](https://www.github.com/LeandroGoerck)
 - Front-end >> [@Trybe](https://www.github.com/LeandroGoerck)
