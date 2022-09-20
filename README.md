@@ -1,5 +1,5 @@
 
-# ⚽ Trybe Football Club ⚽
+# ⚽ Brasil Football Club ⚽
 
  🇧🇷
 O Trybe Football Club é um site para gerenciar partidas de futebol. Nele é possivel adicionar uma partida, registrar os gols do time da casa e do time visitante, acompanhar a pontuação dos jogos em andamento e visualizar a classificação geral.
@@ -12,7 +12,7 @@ O back-end foi desenvolvido por mim e os arquivos estão na pasta 'app/backend'.
 ___
 
  🇺🇸
-Trybe Football Club is a website to manage football matches. It's possible to add a match, record the goals of the home team and the away team, follow the score of the games in progress and view the general classification.
+Brasil Football Club is a website to manage football matches. It's possible to add a match, record the goals of the home team and the away team, follow the score of the games in progress and view the general classification.
 
 As a student, the challenge was to develop the back-end API applying TDD (Test Driven Development) according to the requirements for the site to start working.
 
@@ -24,11 +24,11 @@ The back-end was developed by me, and are in the 'app/backend' folder.
 ## 💻 Install the project
 Clone the repo:
 ```
-git clone git@github.com:LeandroGoerck/trybe-football-club.git
+git clone git@github.com:LeandroGoerck/brasil-football-club.git
 ```
 Enter the repo folder:
 ```
-cd trybe-football-club
+cd brasil-football-club
 ```
 Install the dependencies:
 ```
